@@ -15,6 +15,10 @@ class ProductService(val productRepository: ProductRepository) {
         return productRepository.findById(id).getOrElse { null }
     }
 
+    fun removeProduct(id: Int) {
+        productRepository.deleteById(id)
+    }
+
     fun getAllProducts(): MutableList<Product> {
         return productRepository.findAll()
     }
