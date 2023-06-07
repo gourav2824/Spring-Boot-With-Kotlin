@@ -9,4 +9,8 @@ class ProductService(val productRepository: ProductRepository) {
     fun addProduct(product: Product): Product {
         return productRepository.save(product)
     }
+
+    fun getAllProducts(): MutableList<Product> {
+        return productRepository.findAll()
+    }
 }
