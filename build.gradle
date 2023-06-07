@@ -22,12 +22,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    implementation group: 'org.springframework.data', name: 'spring-data-mongodb', version: '4.1.0'
+    implementation group: 'org.mongodb', name: 'mongo-java-driver', version: '3.12.13'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
