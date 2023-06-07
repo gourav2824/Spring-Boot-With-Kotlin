@@ -15,6 +15,13 @@ class ProductService(private val productRepository: ProductRepository) {
         return productRepository.findById(id).getOrElse { null }
     }
 
+    fun updateProduct(product: Product): Product? {
+        if (!productRepository.existsById(product.id)) {
+            return null
+        }
+        return productRepository.save(product)
+    }
+
     fun removeProduct(id: Int) {
         productRepository.deleteById(id)
     }

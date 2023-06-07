@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -22,6 +23,11 @@ class ProductController(private val productService: ProductService) {
     @GetMapping("/{id}")
     fun getProduct(@PathVariable id: Int): Product? {
         return productService.getProduct(id)
+    }
+
+    @PutMapping("/update")
+    fun updateProduct(@RequestBody product: Product): Product? {
+        return productService.updateProduct(product)
     }
 
     @DeleteMapping("/{id}")
