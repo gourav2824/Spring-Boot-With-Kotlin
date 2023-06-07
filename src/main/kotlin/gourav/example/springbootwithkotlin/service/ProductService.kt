@@ -7,6 +7,7 @@ import kotlin.jvm.optionals.getOrElse
 
 @Service
 class ProductService(private val productRepository: ProductRepository) {
+
     fun addProduct(product: Product): Product {
         return productRepository.save(product)
     }
@@ -26,7 +27,7 @@ class ProductService(private val productRepository: ProductRepository) {
         productRepository.deleteById(id)
     }
 
-    fun getAllProducts(): MutableList<Product> {
+    fun getAllProducts(): List<Product> {
         return productRepository.findAll()
     }
 }
