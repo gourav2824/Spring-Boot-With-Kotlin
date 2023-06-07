@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import kotlin.jvm.optionals.getOrElse
 
 @Service
-class ProductService(val productRepository: ProductRepository) {
+class ProductService(private val productRepository: ProductRepository) {
     fun addProduct(product: Product): Product {
         return productRepository.save(product)
     }

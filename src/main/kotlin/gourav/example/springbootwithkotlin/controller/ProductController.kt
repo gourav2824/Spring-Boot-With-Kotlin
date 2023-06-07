@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/product")
-class ProductController(val productService: ProductService) {
+class ProductController(private val productService: ProductService) {
 
     @PostMapping("/add")
     fun addProduct(@RequestBody product: Product): Product {
