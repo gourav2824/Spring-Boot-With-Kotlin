@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController
 class ProductController(private val productService: ProductService) {
 
     @PostMapping("/add")
-    fun addProduct(@RequestBody product: Product): Product {
-        return productService.addProduct(product)
+    fun addProduct(@RequestBody product: Product): ResponseEntity<Product> {
+        return ResponseEntity.ok(productService.addProduct(product))
     }
 
     @GetMapping("/{id}")
@@ -29,8 +29,9 @@ class ProductController(private val productService: ProductService) {
     }
 
     @PutMapping("/update")
-    fun updateProduct(@RequestBody product: Product): Product? {
-        return productService.updateProduct(product)
+    fun updateProduct(@RequestBody product: Product): ResponseEntity<Product> {
+        val updatedProduct = productService.updateProduct(product) ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.ok(updatedProduct)
     }
 
     @DeleteMapping("/{id}")
@@ -39,7 +40,7 @@ class ProductController(private val productService: ProductService) {
     }
 
     @GetMapping
-    fun getAllProducts(): List<Product> {
-        return productService.getAllProducts()
+    fun getAllProducts(): ResponseEntity<List<Product>> {
+        return ResponseEntity.ok(productService.getAllProducts())
     }
 }
