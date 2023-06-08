@@ -2,6 +2,8 @@ package gourav.example.springbootwithkotlin.controller
 
 import gourav.example.springbootwithkotlin.model.Product
 import gourav.example.springbootwithkotlin.service.ProductService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -21,8 +23,9 @@ class ProductController(private val productService: ProductService) {
     }
 
     @GetMapping("/{id}")
-    fun getProduct(@PathVariable id: Int): Product? {
-        return productService.getProduct(id)
+    fun getProduct(@PathVariable id: Int): ResponseEntity<Product> {
+        val product = productService.getProduct(id) ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.ok(product)
     }
 
     @PutMapping("/update")
