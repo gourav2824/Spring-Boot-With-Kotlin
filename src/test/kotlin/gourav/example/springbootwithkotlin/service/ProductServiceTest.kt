@@ -33,4 +33,22 @@ internal class ProductServiceTest {
 
         assertThat(actualProduct).isEqualTo(product)
     }
+
+    @Test
+    internal fun `test get all products`() {
+        val productsList = getProductsList()
+        `when`(productRepository.findAll()).thenReturn(productsList)
+
+        val products = productService.getAllProducts()
+
+        assertThat(products).isEqualTo(productsList)
+    }
+
+    private fun getProductsList(): List<Product> {
+        return listOf(
+            Product(1, "Watch", "A cool watch!", 1000.0, "Brown"),
+            Product(2, "myPhone", "myPhone 15 Pro", 100000.0, "Gold"),
+            Product(3, "Bell Laptop", "i5 Processor", 70000.0, "Black")
+        )
+    }
 }
