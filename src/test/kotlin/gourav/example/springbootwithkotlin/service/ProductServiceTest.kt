@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import java.util.Optional
 
 internal class ProductServiceTest {
@@ -20,6 +21,7 @@ internal class ProductServiceTest {
 
         val addedProduct = productService.addProduct(product)
 
+        verify(productRepository).save(product)
         assertThat(addedProduct).isEqualTo(product)
     }
 
@@ -31,6 +33,7 @@ internal class ProductServiceTest {
 
         val actualProduct = productService.getProduct(productId)
 
+        verify(productRepository).findById(productId)
         assertThat(actualProduct).isEqualTo(product)
     }
 
@@ -41,6 +44,7 @@ internal class ProductServiceTest {
 
         val products = productService.getAllProducts()
 
+        verify(productRepository).findAll()
         assertThat(products).isEqualTo(productsList)
     }
 
