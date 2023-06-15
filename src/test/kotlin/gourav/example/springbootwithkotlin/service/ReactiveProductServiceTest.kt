@@ -74,6 +74,17 @@ internal class ReactiveProductServiceTest {
             .verifyComplete()
     }
 
+    @Test
+    internal fun `should be able to delete product by id`() {
+        val productId = 1
+        `when`(productRepository.deleteById(productId)).thenReturn(Mono.empty())
+
+        val voidMono = productService.removeProduct(productId)
+
+        StepVerifier.create(voidMono)
+            .verifyComplete()
+    }
+
     private fun getFluxOfProducts(): Flux<Product> {
         return Flux.just(
             Product(1, "Watch", "A cool watch!", 1000.0, "Brown"),
