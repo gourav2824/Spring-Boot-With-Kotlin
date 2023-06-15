@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
 
 internal class ReactiveProductServiceTest {
@@ -23,6 +24,30 @@ internal class ReactiveProductServiceTest {
             .expectNextMatches { product -> product.name == "Watch" }
             .expectNextMatches { product -> product.color == "Gold" }
             .expectNextCount(1)
+            .verifyComplete()
+    }
+
+    @Test
+    internal fun `should be able to update product if the product exists`() {
+        val product = Product(1, "Watch", "A cool watch!", 1000.0, "Brown")
+        `when`(productRepository.existsById(product.id)).thenReturn(Mono.just(true).log())
+        `when`(productRepository.save(product)).thenReturn(Mono.just(product).log())
+
+        val productMono = productService.updateProduct(product)
+
+        StepVerifier.create(productMono)
+            .expectNext(product)
+            .verifyComplete()
+    }
+
+    @Test
+    internal fun `should not be able to update product if the product doesn't exist`() {
+        val product = Product(1, "Watch", "A cool watch!", 1000.0, "Brown")
+        `when`(productRepository.existsById(product.id)).thenReturn(Mono.just(false).log())
+
+        val productMono = productService.updateProduct(product)
+
+        StepVerifier.create(productMono)
             .verifyComplete()
     }
 
