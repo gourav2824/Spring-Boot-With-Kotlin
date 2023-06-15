@@ -15,6 +15,29 @@ internal class ReactiveProductServiceTest {
     private val productService: ReactiveProductService = ReactiveProductService(productRepository)
 
     @Test
+    internal fun `should be able to find product by id if exists`() {
+        val product = Product(1, "Watch", "A cool watch!", 1000.0, "Brown")
+        `when`(productRepository.findById(product.id)).thenReturn(Mono.just(product))
+
+        val productMono = productService.getProduct(product.id)
+
+        StepVerifier.create(productMono)
+            .expectNext(product)
+            .verifyComplete()
+    }
+
+    @Test
+    internal fun `should not be able to find product by id if doesn't exist`() {
+        val productId = 1
+        `when`(productRepository.findById(productId)).thenReturn(Mono.empty())
+
+        val productMono = productService.getProduct(productId)
+
+        StepVerifier.create(productMono)
+            .verifyComplete()
+    }
+
+    @Test
     internal fun `should fetch flux of all products`() {
         `when`(productRepository.findAll()).thenReturn(getFluxOfProducts())
 
