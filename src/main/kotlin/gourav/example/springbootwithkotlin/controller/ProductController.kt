@@ -40,7 +40,7 @@ class ProductController(private val productService: ProductService) {
     }
 
     @GetMapping
-    fun getAllProducts(): ResponseEntity<Array<Product>> {
+    fun getAllProducts(): ResponseEntity<List<Product>> {
         return ResponseEntity.ok(productService.getAllProducts())
     }
 }

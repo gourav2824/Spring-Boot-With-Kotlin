@@ -27,7 +27,7 @@ class ProductService(private val productRepository: ProductRepository) {
         productRepository.deleteById(id)
     }
 
-    fun getAllProducts(): Array<Product> {
-        return productRepository.findAll().toTypedArray()
+    fun getAllProducts(): List<Product> {
+        return productRepository.findAll()
     }
 }
