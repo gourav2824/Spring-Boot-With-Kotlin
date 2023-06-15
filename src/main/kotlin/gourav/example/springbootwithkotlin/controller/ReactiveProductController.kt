@@ -40,6 +40,11 @@ class ReactiveProductController(private val productService: ReactiveProductServi
         return ResponseEntity.ok(productService.removeProduct(id))
     }
 
+    @GetMapping
+    fun getAllProducts(): ResponseEntity<Flux<Product>> {
+        return ResponseEntity.ok(productService.getAllProducts())
+    }
+
     @GetMapping(value = ["/flux"], produces = [MediaType.APPLICATION_STREAM_JSON_VALUE])
     fun getAllProductsFluxStream(): ResponseEntity<Flux<Product>> {
         val products = productService.getAllProducts()
