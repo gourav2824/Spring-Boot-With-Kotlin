@@ -19,8 +19,8 @@ class ReactiveProductService(private val productRepository: ReactiveProductRepos
 
     fun updateProduct(product: Product): Mono<Product> {
         return productRepository.existsById(product.id)
-            .filter { exists -> exists }
-            .then(productRepository.save(product))
+            .filter { it }
+            .flatMap { productRepository.save(product) }
     }
 
     fun removeProduct(id: Int): Mono<Void> {
